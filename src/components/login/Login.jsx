@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {useDispatch} from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import {authActions} from '../../store/auth';
 import './Login.css'
 
@@ -7,9 +8,11 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const submitHandler = (e) => {
-    dispatch(authActions.login())
+    dispatch(authActions.login());
+    navigate("/todo-list")
   }
 
   return (
@@ -37,7 +40,7 @@ const Login = () => {
                     onChange={(e) => setUsername(e.target.value)}
                     required
                   />
-                  <label className="form-control-placeholder" for="username">
+                  <label className="form-control-placeholder" htmlFor="username">
                     Username
                   </label>
                 </div>
@@ -50,7 +53,7 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
-                  <label className="form-control-placeholder" for="password">
+                  <label className="form-control-placeholder" htmlFor="password">
                     Password
                   </label>
                 </div>

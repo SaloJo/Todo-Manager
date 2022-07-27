@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const sampleTodo = {
   id: "anyId",
-  task: "task name",
-  date: "28/07/2022",
+  task: "Task Name",
+  date: "28-Jul-2022",
   category: "Default",
   status: "Due",
 };
@@ -37,9 +37,6 @@ const todoSlice = createSlice({
         (todo) => todo.id === action.payload
       );
       state.todos[todoIndex].status = "Done";
-    },
-    addCategory(state, action) {
-      state.categories.push(action.payload);
     },
   },
 });

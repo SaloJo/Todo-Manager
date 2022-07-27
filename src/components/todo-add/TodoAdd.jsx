@@ -33,6 +33,7 @@ const TodoAdd = () => {
     event.preventDefault();
     let dateString = moment(new Date()).utc().format("DD-MMM-YYYY");
     let diff;
+    let status = "Due";
     if (todoDate) {
       const datePickerString = moment(todoDate).utc().format("DD-MMM-YYYY");
       diff = new Date(datePickerString) - new Date(dateString);
@@ -41,15 +42,34 @@ const TodoAdd = () => {
       diff = -1;
     }
 
+    if(diff >= 0){
+      status = "Due";
+    }else{
+      status = "Overdue"
+    }
+
+    if(!todoDate && params.todoId){
+      const todoItem = todos.find((todoItem) => todoItem.id == params.todoId);
+      if (todoItem) {
+        dateString = todoItem.date;
+        status = todoItem.status;
+      }
+    }
+
     const data = {
-      id: Math.random(),
+      id: params.todoId ? params.todoId : Math.random(),
       task: todoName,
       date: dateString,
       category: category,
-      status: diff > 0 ? "Due" : "Overdue",
+      status:  status,
     };
 
-    dispatch(todoActions.addTask(data));
+    if(params.todoId){
+      dispatch(todoActions.updateTask(data));
+    }else {
+      dispatch(todoActions.addTask(data));
+    }
+
     navigate("/todo-list");
   };
 
@@ -63,7 +83,9 @@ const TodoAdd = () => {
   return (
     <div className="container todo-add-container">
       <Card>
-        <span className="px-4 h3">Add New Task</span>
+        <span className="px-4 h3">
+          {params.todoId ? "Update Task" : "Add New Task"}
+        </span>
 
         <form
           className={classes.form}
@@ -102,7 +124,7 @@ const TodoAdd = () => {
           </div>
           <div className={classes.actions}>
             <button type="submit" className="btn btn-primary">
-              Save
+              {params.todoId ? "Update" : "Save"}
             </button>
           </div>
         </form>

@@ -61,7 +61,7 @@ function TodoList() {
       {!todos.length && (
         <div className="todo-list-item-container mt-5" style={{textAlign: "center"}}>
           <h2>No Task Found</h2>
-          <button className="btn btn-outline-success" onClick={() => navigate("/todo-add")}> Add New Todo</button>
+          <button className="btn btn-outline-success" onClick={() => navigate("/todo-add")}> Add New Task</button>
         </div>
       )}
       <div className="todo-list-item-container">
